@@ -7,6 +7,8 @@
 //
 
 #import "UCChangesDocument.h"
+#import "UCChangesWindowController.h"
+
 
 @implementation UCChangesDocument
 
@@ -18,9 +20,11 @@
 	return self;
 }
 
-- (NSString *)windowNibName
+- (void) makeWindowControllers
 {
-	return @"ChangesDocument";
+	NSWindowController * mainController = [[UCChangesWindowController alloc] initWithWindowNibName:@"ChangesDocument" owner:self];
+	[self addWindowController:mainController];
+	[mainController release];
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController

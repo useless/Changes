@@ -13,6 +13,12 @@
 		8D15AC310486D014006FF6A4 /* UCChangesDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* UCChangesDocument.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		BFC352F11137F97000B5BEED /* ToolbarContent.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC352F01137F97000B5BEED /* ToolbarContent.png */; };
+		BFF7BEF7113736F700E3114C /* ToolbarCommit.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF3113736F700E3114C /* ToolbarCommit.png */; };
+		BFF7BEF8113736F700E3114C /* ToolbarDiff.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF4113736F700E3114C /* ToolbarDiff.png */; };
+		BFF7BEF9113736F700E3114C /* ToolbarHistory.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF5113736F700E3114C /* ToolbarHistory.png */; };
+		BFF7BEFA113736F700E3114C /* ToolbarRestore.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF6113736F700E3114C /* ToolbarRestore.png */; };
+		BFF7BF4211373D5800E3114C /* UCChangesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF7BF4111373D5800E3114C /* UCChangesWindowController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +35,13 @@
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D15AC360486D014006FF6A4 /* Changes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Changes-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Changes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Changes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFC352F01137F97000B5BEED /* ToolbarContent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarContent.png; sourceTree = "<group>"; };
+		BFF7BEF3113736F700E3114C /* ToolbarCommit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarCommit.png; sourceTree = "<group>"; };
+		BFF7BEF4113736F700E3114C /* ToolbarDiff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarDiff.png; sourceTree = "<group>"; };
+		BFF7BEF5113736F700E3114C /* ToolbarHistory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarHistory.png; sourceTree = "<group>"; };
+		BFF7BEF6113736F700E3114C /* ToolbarRestore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarRestore.png; sourceTree = "<group>"; };
+		BFF7BF4011373D5800E3114C /* UCChangesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCChangesWindowController.h; sourceTree = "<group>"; };
+		BFF7BF4111373D5800E3114C /* UCChangesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCChangesWindowController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +97,8 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BFF7BF4011373D5800E3114C /* UCChangesWindowController.h */,
+				BFF7BF4111373D5800E3114C /* UCChangesWindowController.m */,
 				2A37F4AEFDCFA73011CA2CEA /* UCChangesDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* UCChangesDocument.m */,
 			);
@@ -102,6 +117,11 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BFC352F01137F97000B5BEED /* ToolbarContent.png */,
+				BFF7BEF3113736F700E3114C /* ToolbarCommit.png */,
+				BFF7BEF4113736F700E3114C /* ToolbarDiff.png */,
+				BFF7BEF5113736F700E3114C /* ToolbarHistory.png */,
+				BFF7BEF6113736F700E3114C /* ToolbarRestore.png */,
 				8D15AC360486D014006FF6A4 /* Changes-Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				1DDD58280DA1D0D100B32029 /* ChangesDocument.xib */,
@@ -165,6 +185,11 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1DDD582C0DA1D0D100B32029 /* ChangesDocument.xib in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
+				BFF7BEF7113736F700E3114C /* ToolbarCommit.png in Resources */,
+				BFF7BEF8113736F700E3114C /* ToolbarDiff.png in Resources */,
+				BFF7BEF9113736F700E3114C /* ToolbarHistory.png in Resources */,
+				BFF7BEFA113736F700E3114C /* ToolbarRestore.png in Resources */,
+				BFC352F11137F97000B5BEED /* ToolbarContent.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +202,7 @@
 			files = (
 				8D15AC310486D014006FF6A4 /* UCChangesDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
+				BFF7BF4211373D5800E3114C /* UCChangesWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
