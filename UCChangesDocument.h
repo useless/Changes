@@ -13,7 +13,11 @@ typedef enum {
 	UC_FOLDER_ERROR
 } UCChangesErrors;
 
-@interface UCChangesDocument : NSDocument
+@interface UCChangesDocument : NSDocument <NSTableViewDataSource>
 {
+	IBOutlet NSTableView * versionsTable;
+	IBOutlet NSTableColumn * versionsColumn;
+	IBOutlet NSTableColumn * subjectColumn;
+	IBOutlet NSTableColumn * dateColumn;
 }
 @end

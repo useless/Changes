@@ -29,6 +29,7 @@
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
+	[versionsTable setHighlightedTableColumn:versionsColumn];
 	[super windowControllerDidLoadNib:aController];
 }
 
@@ -48,5 +49,26 @@
 		}
     return YES;
 }
+
+#pragma mark History Data Source
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return 42;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	if(tableColumn==dateColumn)
+		{
+		return [NSDate date];
+		}
+	else if(tableColumn==versionsColumn)
+		{
+		return [NSString stringWithFormat:@"%@ 1.%d", row==5?@"•":@"", row];
+		}
+	return @"Lorem ipsum dolor";
+}
+
 
 @end
