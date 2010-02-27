@@ -7,7 +7,11 @@
 //
 
 #import "UCChangesDocument.h"
+#import <QuickLook/QuickLook.h>
 #import "UCChangesWindowController.h"
+
+
+#define PREVIEW_SIZE 192.0
 
 
 @implementation UCChangesDocument
@@ -16,20 +20,34 @@
 {
     if(self = [super init])
 		{
+		qlDict = [[NSDictionary alloc] initWithObjectsAndKeys:(id)kCFBooleanTrue,
+				  (id)kQLThumbnailOptionIconModeKey, nil];
+		previewImage = nil;
 		}
 	return self;
 }
 
+- (void)dealloc
+{
+	NSLog(@"Bye Doc.");
+	[previewImage release];
+	[qlDict release];
+	[fileUTI release];
+	[currentVersion release];
+	[super dealloc];
+}
+
+#pragma mark -
+
 - (void) makeWindowControllers
 {
-	NSWindowController * mainController = [[UCChangesWindowController alloc] initWithWindowNibName:@"ChangesDocument" owner:self];
+	NSWindowController * mainController = [[UCChangesWindowController alloc] initWithWindowNibName:@"ChangesDocument"];
 	[self addWindowController:mainController];
 	[mainController release];
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
-	[versionsTable setHighlightedTableColumn:versionsColumn];
 	[super windowControllerDidLoadNib:aController];
 }
 
@@ -47,28 +65,87 @@
 			}
 		return NO;
 		}
+
+	currentVersion = @"1.3";
+
+	isText = NO;
+
+	NSWorkspace * ws = [NSWorkspace sharedWorkspace];
+	fileUTI = [[ws typeOfFile:[absoluteURL path] error:NULL] retain];
+	NSLog(@"Dateityp %@.", fileUTI);
+	if(fileUTI!=nil && [ws type:fileUTI conformsToType:(NSString *)kUTTypeText])
+		{
+		isText = YES;
+		NSLog(@"Datei ist Text.");
+		}
+
     return YES;
 }
 
-#pragma mark History Data Source
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+- (void)createPreview
 {
-	return 42;
+	if(previewImage==nil)
+		{
+		NSWorkspace * ws = [NSWorkspace sharedWorkspace];
+		previewImage = [ws iconForFile:[[self fileURL] path]];
+		[previewImage setSize:NSMakeSize(PREVIEW_SIZE, PREVIEW_SIZE)];
+		[previewImage retain];
+		[self previewChanged];
+
+		if(fileUTI!=nil && [ws type:fileUTI conformsToType:(NSString *)kUTTypeImage])
+			{
+			[self performSelectorInBackground:@selector(generatePreviewForURL:) withObject:[[self fileURL] copy]];
+			}
+		else
+			{
+			[self performSelectorInBackground:@selector(generateQuicklookForURL:) withObject:[[self fileURL] copy]];
+			}
+		}
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+- (void)previewChanged
 {
-	if(tableColumn==dateColumn)
-		{
-		return [NSDate date];
-		}
-	else if(tableColumn==versionsColumn)
-		{
-		return [NSString stringWithFormat:@"%@ 1.%d", row==5?@"•":@"", row];
-		}
-	return @"Lorem ipsum dolor";
+	[[self windowControllers] makeObjectsPerformSelector:@selector(setPreviewImage:) withObject:previewImage];
 }
+
+#pragma mark Preview Generation
+
+- (void)generatePreviewForURL:(NSURL *)fileURL
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	NSImage * image = [[NSImage alloc] initWithContentsOfURL:fileURL];
+	if(image!=nil && [[image representations] count])
+		{
+		NSImageRep * rep = [[image representations] objectAtIndex:0];
+		[image setScalesWhenResized:YES];
+		[image setSize:NSMakeSize([rep pixelsWide], [rep pixelsHigh])];
+		[previewImage release];
+		previewImage = [image retain];
+		}
+	[image release];
+	[fileURL release];
+	[self performSelectorOnMainThread:@selector(previewChanged) withObject:nil waitUntilDone:NO];
+	[pool release];
+}
+
+- (void)generateQuicklookForURL:(NSURL *)fileURL
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	NSLog(@"Generate QL.");
+	CGImageRef quickLookIcon = QLThumbnailImageCreate(NULL, (CFURLRef)fileURL, CGSizeMake(PREVIEW_SIZE, PREVIEW_SIZE), (CFDictionaryRef)qlDict);
+	if(quickLookIcon!=NULL)
+		{
+		[previewImage release];
+		previewImage = [[NSImage alloc] initWithCGImage:quickLookIcon size:NSMakeSize(PREVIEW_SIZE, PREVIEW_SIZE)];
+		CFRelease(quickLookIcon);
+		}
+	[fileURL release];
+	NSLog(@"QL Done.");
+	[self performSelectorOnMainThread:@selector(previewChanged) withObject:nil waitUntilDone:NO];
+	[pool release];
+}
+
+@synthesize isText, currentVersion;
 
 
 @end

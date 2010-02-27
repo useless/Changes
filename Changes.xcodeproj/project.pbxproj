@@ -14,6 +14,7 @@
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		BFC352F11137F97000B5BEED /* ToolbarContent.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC352F01137F97000B5BEED /* ToolbarContent.png */; };
+		BFC3540C1138232400B5BEED /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC3540B1138232400B5BEED /* QuickLook.framework */; };
 		BFF7BEF7113736F700E3114C /* ToolbarCommit.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF3113736F700E3114C /* ToolbarCommit.png */; };
 		BFF7BEF8113736F700E3114C /* ToolbarDiff.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF4113736F700E3114C /* ToolbarDiff.png */; };
 		BFF7BEF9113736F700E3114C /* ToolbarHistory.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF7BEF5113736F700E3114C /* ToolbarHistory.png */; };
@@ -24,7 +25,6 @@
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChangesDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* Changes_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Changes_Prefix.pch; sourceTree = "<group>"; };
@@ -36,6 +36,7 @@
 		8D15AC360486D014006FF6A4 /* Changes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Changes-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Changes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Changes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC352F01137F97000B5BEED /* ToolbarContent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarContent.png; sourceTree = "<group>"; };
+		BFC3540B1138232400B5BEED /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		BFF7BEF3113736F700E3114C /* ToolbarCommit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarCommit.png; sourceTree = "<group>"; };
 		BFF7BEF4113736F700E3114C /* ToolbarDiff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarDiff.png; sourceTree = "<group>"; };
 		BFF7BEF5113736F700E3114C /* ToolbarHistory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarHistory.png; sourceTree = "<group>"; };
@@ -50,6 +51,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				BFC3540C1138232400B5BEED /* QuickLook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +61,7 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFC3540B1138232400B5BEED /* QuickLook.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -68,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
-				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";

@@ -9,15 +9,27 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 typedef enum {
 	UC_FOLDER_ERROR
 } UCChangesErrors;
 
-@interface UCChangesDocument : NSDocument <NSTableViewDataSource>
+@interface UCChangesDocument : NSDocument
 {
-	IBOutlet NSTableView * versionsTable;
-	IBOutlet NSTableColumn * versionsColumn;
-	IBOutlet NSTableColumn * subjectColumn;
-	IBOutlet NSTableColumn * dateColumn;
+	NSDictionary * qlDict;
+	NSImage * previewImage;
+	NSString * fileUTI;
+	BOOL isText;
+	NSString * currentVersion;
 }
+
+- (void)createPreview;
+- (void)previewChanged;
+
+- (void)generatePreviewForURL:(NSURL *)fileURL;
+- (void)generateQuicklookForURL:(NSURL *)fileURL;
+
+@property(readonly) BOOL isText;
+@property(copy) NSString * currentVersion;
+
 @end

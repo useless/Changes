@@ -7,6 +7,7 @@
 //
 
 #import "UCChangesWindowController.h"
+#import "UCChangesDocument.h"
 
 
 static NSString * sHistoryItem = @"UCHistory";
@@ -18,6 +19,17 @@ static NSString * sRestoreItem = @"UCRestore";
 
 @implementation UCChangesWindowController
 
+- (void)dealloc
+{
+	NSLog(@"Bye Window Controller.");
+	[super dealloc];
+}
+
+- (UCChangesDocument *)document
+{
+	return [super document];
+}
+
 - (void)windowDidLoad
 {
 	NSToolbar * toolbar = [[NSToolbar alloc] initWithIdentifier:@"UCChangesToolbar"];
@@ -25,14 +37,34 @@ static NSString * sRestoreItem = @"UCRestore";
 	[toolbar setDelegate:self];
 	[[self window] setToolbar:toolbar];
 	[toolbar setSelectedItemIdentifier:sHistoryItem];
-	[toolbar autorelease];
+	[toolbar release];
+
+	[versionsTable setHighlightedTableColumn:versionsColumn];
+	[self showPane:historyView];
+}
+
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+	return [NSString stringWithFormat:@"%@ (v%@)", displayName, [self document].currentVersion];
 }
 
 #pragma mark -
 
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+- (void)setPreviewImage:(NSImage *)image
 {
-	return [NSString stringWithFormat:@"%@ (v%@)", displayName, @"1.3"];
+	[contentPreview setImage:image];
+}
+
+#pragma mark -
+
+- (void)showPane:(NSView *)pane
+{
+	[historyView removeFromSuperview];
+	[diffView removeFromSuperview];
+	[contentImageView removeFromSuperview];
+	[contentTextView removeFromSuperview];
+	[pane setFrame:[[[self window] contentView] frame]];
+	[[[self window] contentView] addSubview:pane];
 }
 
 #pragma mark Toolbar Delegate
@@ -104,19 +136,49 @@ static NSString * sRestoreItem = @"UCRestore";
 	return [NSArray arrayWithObjects:sHistoryItem, sDiffItem, sContentItem, nil];
 }
 
+#pragma mark History Data Source
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return 42;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	if(tableColumn==dateColumn)
+		{
+		return [NSDate date];
+		}
+	else if([[tableColumn identifier] isEqualToString:[versionsColumn identifier]])
+		{
+		return [NSString stringWithFormat:@"%@ 1.%d", row==5?@"•":@"", row+1];
+		}
+	return @"Lorem ipsum dolor";
+}
+
 #pragma mark Actions
 
 - (IBAction)showHistory:(id)sender
 {
-	NSLog(@"Document: %@.", [self document]);
+	[self showPane:historyView];
 }
 
 - (IBAction)showDiff:(id)sender
 {
+	[self showPane:diffView];
 }
 
 - (IBAction)showContent:(id)sender
 {
+	if([self document].isText)
+		{
+		[self showPane:contentTextView];
+		}
+	else
+		{
+		[[self document] createPreview];
+		[self showPane:contentImageView];
+		}
 }
 
 
