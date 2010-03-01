@@ -59,12 +59,12 @@ static NSString * sRestoreItem = @"UCRestore";
 
 - (void)showPane:(NSView *)pane
 {
-	[historyView removeFromSuperview];
-	[diffView removeFromSuperview];
-	[contentImageView removeFromSuperview];
-	[contentTextView removeFromSuperview];
+	if(activePane==pane) { return; }
+
+	[activePane removeFromSuperview];
 	[pane setFrame:[[[self window] contentView] frame]];
 	[[[self window] contentView] addSubview:pane];
+	activePane = pane;
 }
 
 #pragma mark Toolbar Delegate
@@ -77,6 +77,7 @@ static NSString * sRestoreItem = @"UCRestore";
 		[item setLabel:NSLocalizedString(@"History", @"History Toolbar Item Label")];
 		[item setPaletteLabel:NSLocalizedString(@"Show History", @"History Toolbar Palette Label")];
 		[item setAction:@selector(showHistory:)];
+		[item setTarget:self];
 		[item setImage:[NSImage imageNamed:@"ToolbarHistory"]];
 		}
 	else if([itemIdentifier isEqualToString:sDiffItem])
@@ -84,6 +85,7 @@ static NSString * sRestoreItem = @"UCRestore";
 		[item setLabel:NSLocalizedString(@"Changes", @"Diff Toolbar Item Label")];
 		[item setPaletteLabel:NSLocalizedString(@"Show Changes", @"Diff Toolbar Palette Label")];
 		[item setAction:@selector(showDiff:)];
+		[item setTarget:self];
 		[item setImage:[NSImage imageNamed:@"ToolbarDiff"]];
 		}
 	else if([itemIdentifier isEqualToString:sContentItem])
@@ -91,6 +93,7 @@ static NSString * sRestoreItem = @"UCRestore";
 		[item setLabel:NSLocalizedString(@"Content", @"Content Toolbar Item Label")];
 		[item setPaletteLabel:NSLocalizedString(@"Show Content", @"Content Toolbar Palette Label")];
 		[item setAction:@selector(showContent:)];
+		[item setTarget:self];
 		[item setImage:[NSImage imageNamed:@"ToolbarContent"]];
 		}
 	else if([itemIdentifier isEqualToString:sRestoreItem])
@@ -98,6 +101,7 @@ static NSString * sRestoreItem = @"UCRestore";
 		[item setLabel:NSLocalizedString(@"Restore", @"Restore Toolbar Item Label")];
 		[item setPaletteLabel:[item label]];
 		[item setAction:@selector(restore:)];
+		[item setTarget:self];
 		[item setImage:[NSImage imageNamed:@"ToolbarRestore"]];
 		}
 	else if([itemIdentifier isEqualToString:sCommitItem])
@@ -105,6 +109,7 @@ static NSString * sRestoreItem = @"UCRestore";
 		[item setLabel:NSLocalizedString(@"Commit", @"Commit Toolbar Item Label")];
 		[item setPaletteLabel:[item label]];
 		[item setAction:@selector(commit:)];
+		[item setTarget:self];
 		[item setImage:[NSImage imageNamed:@"ToolbarCommit"]];
 		[item setVisibilityPriority:NSToolbarItemVisibilityPriorityHigh];
 		}
@@ -161,11 +166,19 @@ static NSString * sRestoreItem = @"UCRestore";
 - (IBAction)showHistory:(id)sender
 {
 	[self showPane:historyView];
+	if([sender isKindOfClass:[NSMenuItem class]])
+		{
+		[[[self window] toolbar] setSelectedItemIdentifier:sHistoryItem];
+		}
 }
 
 - (IBAction)showDiff:(id)sender
 {
 	[self showPane:diffView];
+	if([sender isKindOfClass:[NSMenuItem class]])
+		{
+		[[[self window] toolbar] setSelectedItemIdentifier:sDiffItem];
+		}
 }
 
 - (IBAction)showContent:(id)sender
@@ -179,6 +192,36 @@ static NSString * sRestoreItem = @"UCRestore";
 		[[self document] createPreview];
 		[self showPane:contentImageView];
 		}
+	if([sender isKindOfClass:[NSMenuItem class]])
+		{
+		[[[self window] toolbar] setSelectedItemIdentifier:sContentItem];
+		}
+}
+
+#pragma mark Validation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	if([menuItem action]==@selector(showHistory:))
+		{
+		[menuItem setState:activePane==historyView?NSOnState:NSOffState];
+		}
+	else if([menuItem action]==@selector(showDiff:))
+		{
+		[menuItem setState:activePane==diffView?NSOnState:NSOffState];
+		}
+	else if([menuItem action]==@selector(showContent:))
+		{
+		if(activePane==contentTextView || activePane==contentImageView)
+			{
+			[menuItem setState:NSOnState];
+			}
+		else
+			{
+			[menuItem setState:NSOffState];
+			}
+		}
+	return YES;
 }
 
 

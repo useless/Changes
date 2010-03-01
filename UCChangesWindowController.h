@@ -13,6 +13,7 @@
 
 @interface UCChangesWindowController : NSWindowController <NSToolbarDelegate, NSTableViewDataSource>
 {
+	NSView * activePane;
 	IBOutlet NSView * historyView;
 	IBOutlet NSView * diffView;
 	IBOutlet NSView * contentImageView;
