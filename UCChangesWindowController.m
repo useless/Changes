@@ -34,6 +34,7 @@ static NSString * sRestoreItem = @"UCRestore";
 {
 	NSToolbar * toolbar = [[NSToolbar alloc] initWithIdentifier:@"UCChangesToolbar"];
 	[toolbar setAllowsUserCustomization:YES];
+	[toolbar setAutosavesConfiguration:YES];
 	[toolbar setDelegate:self];
 	[[self window] setToolbar:toolbar];
 	[toolbar setSelectedItemIdentifier:sHistoryItem];
@@ -124,8 +125,8 @@ static NSString * sRestoreItem = @"UCRestore";
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
 	return [NSArray arrayWithObjects:sHistoryItem, sDiffItem, sContentItem,
-			NSToolbarSeparatorItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
-			sRestoreItem, NSToolbarSpaceItemIdentifier, sCommitItem, nil];
+			NSToolbarFlexibleSpaceItemIdentifier, sRestoreItem,
+			NSToolbarSeparatorItemIdentifier, sCommitItem, nil];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
@@ -163,6 +164,14 @@ static NSString * sRestoreItem = @"UCRestore";
 
 #pragma mark Actions
 
+- (IBAction)commit:(id)sender
+{
+}
+
+- (IBAction)restore:(id)sender
+{
+}
+
 - (IBAction)showHistory:(id)sender
 {
 	[self showPane:historyView];
@@ -196,6 +205,10 @@ static NSString * sRestoreItem = @"UCRestore";
 		{
 		[[[self window] toolbar] setSelectedItemIdentifier:sContentItem];
 		}
+}
+
+- (IBAction)refresh:(id)sender
+{
 }
 
 #pragma mark Validation

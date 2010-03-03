@@ -34,9 +34,11 @@
 
 - (void)showPane:(NSView *)pane;
 
+- (IBAction)commit:(id)sender;
+- (IBAction)restore:(id)sender;
 - (IBAction)showHistory:(id)sender;
 - (IBAction)showDiff:(id)sender;
 - (IBAction)showContent:(id)sender;
-
+- (IBAction)refresh:(id)sender;
 
 @end
