@@ -136,7 +136,8 @@
 	if(quickLookIcon!=NULL)
 		{
 		[previewImage release];
-		previewImage = [[NSImage alloc] initWithCGImage:quickLookIcon size:NSMakeSize(PREVIEW_SIZE, PREVIEW_SIZE)];
+		previewImage = [[NSImage alloc] init];
+		[previewImage addRepresentation:[[NSBitmapImageRep alloc] initWithCGImage:quickLookIcon]];
 		CFRelease(quickLookIcon);
 		}
 	[fileURL release];
