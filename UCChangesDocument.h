@@ -1,5 +1,5 @@
 //
-//  MyDocument.h
+//  UCChangesDocument.h
 //  Changes
 //
 //  Created by Christoph on 25.02.2010.
